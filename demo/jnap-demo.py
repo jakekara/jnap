@@ -5,18 +5,18 @@
 # jake@jakekara.com
 #
 
-from jnap.router import Linksys
+from jnap.router import Linksys 
 from time import sleep
 import json
 import sys
+import getpass
+ 
+addr = sys.argv[1]
+router = Linksys(addr)
 
-router = Linksys(sys.argv[1])
-
-if len(sys.argv) > 2:
-    # Try to set router password if one is supplied.
-    # Some tests won't work if invalid password is supplied
-    router.password(sys.argv[2])
-    print router.check_password(sys.argv[2]).content
+pw = getpass.getpass("Enter admin password for '"+str(addr)+"': ")
+router.password(pw)
+print router.check_password(pw).content
 
 # Checking whether router has default password
 print router.has_default_password().content
